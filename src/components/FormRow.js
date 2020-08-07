@@ -6,7 +6,7 @@ import { render } from 'react-dom';
 
 
 const FormRow = props => {
-    const { children } = props
+    const { children, first, last } = props
 
     return (
         <View style={styles.container}>
@@ -26,6 +26,12 @@ const styles = StyleSheet.create({
         marginTop: 5,
         marginBottom: 5,
         elevation: 1
+    },
+    first: {
+        marginTop: 10
+    },
+    last: {
+        marginTop: 10
     }
 
 })
