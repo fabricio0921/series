@@ -45,13 +45,25 @@ export default class LoginPage extends React.Component {
 
     tryLogin() {
         this.setState({ isLoading: true, message: '' });
-        const { mail, password } = this.state
+        const { mail, password } = this.state;
+
+        loginUserSucess= user =>{
+            this.setState({
+                message: 'Sucesso!'
+            });
+            this.props.navigation.navigate('Main');
+        }
+
+        loginUserFailed = error =>{
+            this.setState({
+                message: this.getMessageByErrorCode(error.code)
+            })
+        }
+
+
         firebase.auth()
             .signInWithEmailAndPassword(mail, password)
-            .then(user => {
-                this.setState({ message: 'Sucesso!' });
-                // console.log('usuário autenticado', user);
-            })
+            .then(loginUserSucess)
             .catch(error => {
                 if (error.code === 'auth/user-not-found') {
                     Alert.alert(
@@ -67,18 +79,18 @@ export default class LoginPage extends React.Component {
                                 firebase
                                     .auth()
                                     .createUserWithEmailAndPassword(mail, password)
-                                    .then(user => {
-                                        this.setState({ message: 'Sucesso !' });
-                                    })
-                                    .catch(error => this.setState({
-                                        message: this.getMessageByErrorCode(error.code)
-                                    }))
+                                    .then(loginUserSucess)
+                                    .catch(loginUserFailed)
                             }
                         }],
                         { cancelable: false }
                     )
+                    return;
                 }
-                this.setState({ message: this.getMessageByErrorCode(error.code) })
+                    loginUserFailed(error)
+
+            
+                
 
                 // console.log('usuário não autenticado', error)
             })

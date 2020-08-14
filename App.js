@@ -4,15 +4,20 @@ import { View, Text } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
-import LoginPage from './src/pages/LoginPage'
+import LoginPage from './src/pages/LoginPage';
+import SeriesPage from './src/pages/SeriesPage';
 
 const AppNavigator = createStackNavigator({
-  Login: {
+  'Login': {
     screen: LoginPage,
     navigationOptions: {
       title: 'Bem vindo'
     }
   },
+  'Main':{
+    screen:SeriesPage
+
+  }
 }, {
   //sobrescreve para todas as telas
   defaultNavigationOptions: {
